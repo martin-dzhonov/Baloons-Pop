@@ -1,0 +1,6 @@
+C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Common\bin\Debug\Baloons.Common.exe.config
+C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Common\bin\Debug\Baloons.Common.exe
+C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Common\bin\Debug\Baloons.Common.pdb
+C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Common\obj\Debug\Baloons.Common.csprojResolveAssemblyReference.cache
+C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Common\obj\Debug\Baloons.Common.exe
+C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Common\obj\Debug\Baloons.Common.pdb
