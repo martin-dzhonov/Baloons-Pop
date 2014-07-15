@@ -8,20 +8,25 @@ using System.Threading.Tasks;
 
 namespace Baloons.Common.Field
 {
-    class Field : IRenderable
+    class Matrix : IRenderable
     {
         private byte[,] innerMatrix;
-        private char[,] outterImage;
+        private char[,] image;
 
         private int rows;
         private int cols;
-        public Field()
+        public Matrix()
         {
-            rows = (int)FieldDimensions.Height;
-            cols = (int)FieldDimensions.Width;
+            rows = (int)MatrixDimensions.Height;
+            cols = (int)MatrixDimensions.Width;
 
             innerMatrix = this.GenerateInner();
-            outterImage = this.GenerateOuter();
+            image = this.GenerateImage(innerMatrix);
+        }
+
+        public char[,] GetImage()
+        {
+            return this.image;
         }
 
         public byte[,] InnerMatrix
@@ -32,28 +37,10 @@ namespace Baloons.Common.Field
             }
         }
 
-        private char[,] GenerateOuter()
-        {
-            int outterRows = rows + 3;
-            int outterCols = cols + 3;
-            char[,] charsMatrix = new char[outterRows, outterCols];
-
-            for (int i = 2; i < outterCols - 1; i++)
-            {
-                charsMatrix[0, i] = '1';
-            }
-            for (int i = 2; i < outterRows - 1; i++)
-            {
-                charsMatrix[i, 0] = '1';
-               
-            }
-            return charsMatrix;
-        }
         private byte[,] GenerateInner()
         {
-            int rows = (int)FieldDimensions.Height;
-            int cols = (int)FieldDimensions.Width;
-            byte[,] numbersMatrix = new byte[rows, cols];
+
+            byte[,] numbersMatrix = new byte[this.rows, this.cols];
             Random rnd = new Random();
             for (int row = 0; row < rows; row++)
             {
@@ -66,9 +53,18 @@ namespace Baloons.Common.Field
             return numbersMatrix;
         }
 
-        public char[,] GetImage()
+        private char[,] GenerateImage(byte[,] innerMatrix)
         {
-            return outterImage;
+            char[,] image = new char[this.rows, this.cols];
+            for (int row = 0; row < this.rows; row++)
+            {
+                for (int col = 0; col < cols; col++)
+                {
+                    image[row, col] = innerMatrix[row, col].ToString()[0];
+                }
+            }
+            return image;
         }
+
     }
 }

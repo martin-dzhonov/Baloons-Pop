@@ -2,18 +2,18 @@ using System;
 
 namespace Balloons_Pops_game
 {
-    public class klasacia : IComparable<klasacia>
+    public class Chart : IComparable<Chart>
     {
         public int Value;
         public string Name;
 
-        public klasacia(int value, string name)
+        public Chart(int value, string name)
         {
             Value = value;
             Name = name;
         }
 
-        public int CompareTo(klasacia other)
+        public int CompareTo(Chart other)
         {
             return Value.CompareTo(other.Value);
         }

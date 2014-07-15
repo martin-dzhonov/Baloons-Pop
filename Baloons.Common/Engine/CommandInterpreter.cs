@@ -8,18 +8,19 @@ namespace Baloons.Common.Engine
     using Baloons.Common.Field;
     class CommandInterpreter
     {
-        private Field field;
+        private Matrix field;
         private ConsoleRenderer renderer;
         public CommandInterpreter()
         {
-            this.field = new Field();
+            this.field = new Matrix();
             this.renderer = new ConsoleRenderer();
         }
         public void ExecuteComand(string command)
         {
             if (command == "init")
             {
-                renderer.Render(field);
+                renderer.RenderOutlines();
+                renderer.RenderMatrix(field);
             }
         }
 

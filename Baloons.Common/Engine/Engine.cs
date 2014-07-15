@@ -21,7 +21,7 @@ namespace Baloons.Common.Engine
             {
                 string command = "init";
                 interpreter.ExecuteComand(command);
-                Console.Write("Command: ");
+                //Console.Write("Command: ");
                 command = Console.ReadLine();      
             }
         }

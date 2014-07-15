@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Baloons.Common.Enum
 {
-    enum FieldDimensions
+    public enum MatrixDimensions
     {
-        Width = 25, Height = 8
+        Width = 10, Height = 5
     }
 }
