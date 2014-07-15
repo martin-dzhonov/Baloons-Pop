@@ -47,5 +47,9 @@ namespace ConsoleApplication1
             }
             return Skilled;
         }
+        static void Main()
+        {
+
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Baloons.Common.Engine
 {
-    class ConsoleRenderer
+    internal class ConsoleRenderer
     {
         private readonly int fieldRows;
         private readonly int fieldCols;
@@ -39,6 +39,8 @@ namespace Baloons.Common.Engine
         {
             switch (num)
             {
+                case 0:
+                    return ConsoleColor.Black;
                 case 1:
                     return ConsoleColor.Red;
                 case 2:
@@ -99,29 +101,50 @@ namespace Baloons.Common.Engine
         
         public void RenderMatrix(IRenderable obj)
         {
-            int matrixFinishRow = fieldRows - 1;
-            int matrixFinishCol = fieldCols - 2;
-
             char[,] image = obj.GetImage();
+
             for (int i = 0; i < image.GetLength(0); i++)
             {
                 int currPrintRow = i + MatrixTopOffset;
+
                 for (int j = 0; j < image.GetLength(1); j++)
                 {
                     int currPrintCol = (j * 2) + MatrixLeftOffset;
                     int currNum = (int)Char.GetNumericValue(image[i, j]);
                     ConsoleColor currColor = GetNumberColor(currNum);
+
                     WriteOnPosition(currPrintRow, currPrintCol, currNum.ToString(), currColor);
                 }
             }
         }
 
+        public void RenderField(IRenderable obj)
+        {
+            RenderOutlines();
+            RenderMatrix(obj);
+        }
+
         public void RenderText(params string[] words)
         {
+            ClearText();
             for (int i = 0; i < words.Length; i++)
             {
-                WriteOnPosition(fieldRows + 1, 0, words[i], ConsoleColor.Green);
+                WriteOnPosition(fieldRows + 1 + i, 0, words[i], ConsoleColor.Green);
             }
+        }
+
+        private void ClearText()
+        {
+            string emptyLine = new string(' ', Console.BufferWidth);
+            for (int i = 0; i < 10; i++)
+            {
+                WriteOnPosition(fieldRows + 1 + i, 0, emptyLine, ConsoleColor.Black);
+            }
+        }
+
+        public void ClearAll()
+        {
+            Console.Clear();
         }
     }
 }

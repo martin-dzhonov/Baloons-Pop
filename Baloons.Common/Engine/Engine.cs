@@ -8,7 +8,7 @@ namespace Baloons.Common.Engine
 {
     public class Engine
     {
-        private CommandInterpreter interpreter;
+        private readonly CommandInterpreter interpreter;
 
         public Engine()
         {
@@ -17,11 +17,11 @@ namespace Baloons.Common.Engine
 
         public void Run()
         {
+            
+            string command = "init";
             while (true)
-            {
-                string command = "init";
+            {          
                 interpreter.ExecuteComand(command);
-                //Console.Write("Command: ");
                 command = Console.ReadLine();      
             }
         }

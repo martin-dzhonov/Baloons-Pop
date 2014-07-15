@@ -41,13 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="baloni.cs" />
+    <Compile Include="Engine\BaloonPopper.cs" />
     <Compile Include="Engine\CommandInterpreter.cs" />
     <Compile Include="Engine\ConsoleRenderer.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Enum\FieldDimensions.cs" />
     <Compile Include="Enum\MatrixDimensions.cs" />
-    <Compile Include="Field\Cell.cs" />
     <Compile Include="Field\Matrix.cs" />
     <Compile Include="Interfaces\IRenderable.cs" />
     <Compile Include="Chart.cs" />

@@ -10,11 +10,12 @@ namespace Baloons.Common.Field
 {
     class Matrix : IRenderable
     {
-        private byte[,] innerMatrix;
+        private int[,] innerMatrix;
         private char[,] image;
 
-        private int rows;
-        private int cols;
+        private readonly int rows;
+        private readonly int cols;
+
         public Matrix()
         {
             rows = (int)MatrixDimensions.Height;
@@ -26,34 +27,38 @@ namespace Baloons.Common.Field
 
         public char[,] GetImage()
         {
+            this.image = GenerateImage(innerMatrix);
             return this.image;
         }
 
-        public byte[,] InnerMatrix
+        public int[,] InnerMatrix
         {
             get
             {
                 return this.innerMatrix;
             }
+            set
+            {
+                this.innerMatrix = value;
+            }
         }
 
-        private byte[,] GenerateInner()
+        private int[,] GenerateInner()
         {
-
-            byte[,] numbersMatrix = new byte[this.rows, this.cols];
+            int[,] numbersMatrix = new int[this.rows, this.cols];
             Random rnd = new Random();
             for (int row = 0; row < rows; row++)
             {
                 for (int col = 0; col < cols; col++)
                 {
-                    byte randomNum = (byte)rnd.Next(1, 5);
+                    int randomNum = (int)rnd.Next(1, 5);
                     numbersMatrix[row, col] = randomNum;
                 }
             }
             return numbersMatrix;
         }
 
-        private char[,] GenerateImage(byte[,] innerMatrix)
+        private char[,] GenerateImage(int[,] innerMatrix)
         {
             char[,] image = new char[this.rows, this.cols];
             for (int row = 0; row < this.rows; row++)
@@ -65,6 +70,5 @@ namespace Baloons.Common.Field
             }
             return image;
         }
-
     }
 }
