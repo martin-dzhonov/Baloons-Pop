@@ -11,11 +11,10 @@ namespace Baloons.Common.Engine
 
     internal class CommandInterpreter
     {
-        private Matrix matrix;
-        private ConsoleRenderer renderer;
-        private Matrix startMatrix;
+        private BaloonsContainer container;   
+        private ConsoleRenderer renderer;       
         private BaloonPopper popper;
-
+        private int[,] containerMatrixCopy;
         public CommandInterpreter()
         {
             Console.WindowWidth = 75;
@@ -25,7 +24,6 @@ namespace Baloons.Common.Engine
             
             this.renderer = new ConsoleRenderer();
             InitField();
-            popper = new BaloonPopper();
         }
 
         public void ExecuteComand(string command)
@@ -56,10 +54,7 @@ namespace Baloons.Common.Engine
             {
                 if (IsValidPopCommand(commandWords))
                 {
-                    int rowCoords = Convert.ToInt32(commandWords[1]);
-                    int colCoords = Convert.ToInt32(commandWords[2]);
-                    this.popper.Pop(matrix, rowCoords, colCoords);
-                    renderer.RenderField(matrix);
+                    HandlePopCommand(commandWords);
                 }
                 else
                 {
@@ -67,7 +62,8 @@ namespace Baloons.Common.Engine
                     Console.ReadKey();
                 }
             }
-            else
+            
+            else if(commandWords.Length != 0)
             {
                 renderer.RenderText("Invalid input !", "*Press any key to continue*");
                 Console.ReadKey();
@@ -88,8 +84,8 @@ namespace Baloons.Common.Engine
                     int rowCoords = Int32.Parse(words[1]);
                     int colCoords = Int32.Parse(words[2]);
                     if ((rowCoords >= 0 && colCoords >= 0) &&
-                        (rowCoords < (int)MatrixDimensions.Width &&
-                         colCoords < (int)MatrixDimensions.Height))
+                        (rowCoords < (int)MatrixDimensions.Height &&
+                         colCoords < (int)MatrixDimensions.Width))
                     {
                         return true;
                     }
@@ -109,16 +105,25 @@ namespace Baloons.Common.Engine
             }
         }
 
+        private void HandlePopCommand(string[] commandWords)
+        {
+            int rowCoords = Convert.ToInt32(commandWords[1]);
+            int colCoords = Convert.ToInt32(commandWords[2]);
+            container.InnerMatrix = popper.Pop(rowCoords, colCoords);
+            renderer.RenderField(container);
+        }
+
         private void HandleInitCommand()
         {
             InitField();
-            renderer.RenderField(matrix);
+            renderer.RenderField(container);
         }
 
         private void HandleRestartCommand()
         {
-            this.matrix = startMatrix;
-            renderer.RenderField(matrix);
+            Array.Copy(containerMatrixCopy, container.InnerMatrix, containerMatrixCopy.Length);
+            this.popper = new BaloonPopper(container);
+            renderer.RenderField(container);
         }
 
         private void HandleExitCommand()
@@ -130,8 +135,11 @@ namespace Baloons.Common.Engine
 
         private void InitField()
         {
-            this.matrix = new Matrix();
-            this.startMatrix = matrix;
+            this.container = new BaloonsContainer();
+            this.popper = new BaloonPopper(container);
+            containerMatrixCopy = new int[container.InnerMatrix.GetLength(0), container.InnerMatrix.GetLength(1)];
+            Array.Copy(container.InnerMatrix, containerMatrixCopy, container.InnerMatrix.Length);
+            renderer.RenderField(container);
         }
     }
 }

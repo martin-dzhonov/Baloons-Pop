@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Baloons.Common.Field
 {
-    class Matrix : IRenderable
+   public class BaloonsContainer : IRenderable
     {
         private int[,] innerMatrix;
         private char[,] image;
@@ -16,7 +16,7 @@ namespace Baloons.Common.Field
         private readonly int rows;
         private readonly int cols;
 
-        public Matrix()
+        public BaloonsContainer()
         {
             rows = (int)MatrixDimensions.Height;
             cols = (int)MatrixDimensions.Width;
@@ -51,7 +51,7 @@ namespace Baloons.Common.Field
             {
                 for (int col = 0; col < cols; col++)
                 {
-                    int randomNum = (int)rnd.Next(1, 5);
+                    int randomNum = rnd.Next(1, 5);
                     numbersMatrix[row, col] = randomNum;
                 }
             }

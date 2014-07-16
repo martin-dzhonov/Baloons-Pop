@@ -17,8 +17,9 @@ namespace Baloons.Common.Engine
 
         public void Run()
         {
-            
-            string command = "init";
+
+            string command = string.Empty;
+
             while (true)
             {          
                 interpreter.ExecuteComand(command);

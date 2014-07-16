@@ -54,7 +54,7 @@ namespace Baloons.Common.Engine
             }
         }
 
-        public void RenderOutlines()
+        private void RenderOutlines()
         {
             int counter = 0;
             
@@ -99,7 +99,7 @@ namespace Baloons.Common.Engine
             }
         }
         
-        public void RenderMatrix(IRenderable obj)
+        public void RenderContainer(IRenderable obj)
         {
             char[,] image = obj.GetImage();
 
@@ -121,7 +121,7 @@ namespace Baloons.Common.Engine
         public void RenderField(IRenderable obj)
         {
             RenderOutlines();
-            RenderMatrix(obj);
+            RenderContainer(obj);
         }
 
         public void RenderText(params string[] words)
