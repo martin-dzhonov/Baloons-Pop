@@ -100,23 +100,24 @@ namespace Baloons.Common.Engine
 
         private void HandlePopCommand(string[] commandWords)
         {
+            
             int rowCoords = Convert.ToInt32(commandWords[1]);
             int colCoords = Convert.ToInt32(commandWords[2]);
             container.InnerMatrix = popper.Pop(rowCoords, colCoords);
-            renderer.RenderField(container);
+            renderer.RenderContainer(container);
         }
 
         private void HandleInitCommand()
         {
             InitField();
-            renderer.RenderField(container);
+            renderer.RenderContainer(container);
         }
 
         private void HandleRestartCommand()
         {
             Array.Copy(containerMatrixCopy, container.InnerMatrix, containerMatrixCopy.Length);
             this.popper = new BaloonPopper(container);
-            renderer.RenderField(container);
+            renderer.RenderContainer(container);
         }
 
         private void HandleExitCommand()
@@ -132,7 +133,7 @@ namespace Baloons.Common.Engine
             this.popper = new BaloonPopper(container);
             containerMatrixCopy = new int[container.InnerMatrix.GetLength(0), container.InnerMatrix.GetLength(1)];
             Array.Copy(container.InnerMatrix, containerMatrixCopy, container.InnerMatrix.Length);
-            renderer.RenderField(container);
+            renderer.RenderContainer(container);
         }
     }
 }

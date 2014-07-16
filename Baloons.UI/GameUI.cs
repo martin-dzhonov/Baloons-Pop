@@ -6,8 +6,10 @@ namespace Baloons.UI
     {
         static void Main(string[] args)
         {
-            Engine engine = new Engine();
+            System.Console.WriteLine();
+            Engine engine = Engine.Instance;
             engine.Run();
+
         }
     }
 }
