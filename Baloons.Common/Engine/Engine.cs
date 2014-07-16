@@ -22,7 +22,7 @@ namespace Baloons.Common.Engine
 
             while (true)
             {          
-                interpreter.ExecuteComand(command);
+                interpreter.ValidateAndDispatch(command);
                 command = Console.ReadLine();      
             }
         }

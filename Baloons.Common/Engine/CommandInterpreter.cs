@@ -15,6 +15,7 @@ namespace Baloons.Common.Engine
         private ConsoleRenderer renderer;       
         private BaloonPopper popper;
         private int[,] containerMatrixCopy;
+
         public CommandInterpreter()
         {
             Console.WindowWidth = 75;
@@ -26,7 +27,7 @@ namespace Baloons.Common.Engine
             InitField();
         }
 
-        public void ExecuteComand(string command)
+        public void ValidateAndDispatch(string command)
         {
             var commandWords = command.ToLower().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -62,8 +63,7 @@ namespace Baloons.Common.Engine
                     Console.ReadKey();
                 }
             }
-            
-            else if(commandWords.Length != 0)
+            else if (commandWords.Length != 0)
             {
                 renderer.RenderText("Invalid input !", "*Press any key to continue*");
                 Console.ReadKey();
@@ -87,22 +87,15 @@ namespace Baloons.Common.Engine
                         (rowCoords < (int)MatrixDimensions.Height &&
                          colCoords < (int)MatrixDimensions.Width))
                     {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
+                        if (container.InnerMatrix[rowCoords, colCoords] != 0)
+                        {
+                            return true;
+                        }
+
                     }
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private void HandlePopCommand(string[] commandWords)

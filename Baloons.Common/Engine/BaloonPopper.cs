@@ -15,14 +15,43 @@ namespace Baloons.Common.Engine
 
         public BaloonPopper(BaloonsContainer container)
         {
-            this.matrixToModify = container.InnerMatrix;
+            this.matrixToModify = new int[container.InnerMatrix.GetLength(0), container.InnerMatrix.GetLength(1)];
+            Array.Copy(container.InnerMatrix, matrixToModify, container.InnerMatrix.Length);
             baloonsRemaining = container.InnerMatrix.GetLength(0) * container.InnerMatrix.GetLength(1);
         }
 
         public int[,] Pop(int row, int col)
         {
             FindAndPop(row, col);
+            FallDown();
             return this.matrixToModify;
+        }
+        public void FallDown()
+        {
+            int currRow = 0;
+            for (int col = 0; col < matrixToModify.GetLength(1); col++)
+            {
+                for (int row = matrixToModify.GetLength(0) - 1; row > 0; row--)
+                {
+                    if (matrixToModify[row, col] == 0)
+                    {
+                        currRow = row - 1;
+                        while (currRow >= 0)
+                        {
+                            if (matrixToModify[currRow, col] != 0)
+                            {
+                                matrixToModify[row, col] = matrixToModify[currRow, col];
+                                matrixToModify[currRow, col] = 0;
+                                break;
+                            }
+                            else
+                            {
+                                currRow--;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void GoLeft(int row, int column, int searchedItem)
@@ -115,9 +144,6 @@ namespace Baloons.Common.Engine
             GoDown(rowAtm, columnAtm, searchedValue);
         }
 
-        public void FallDown()
-        {
-
-        }
+        
     }
 }
