@@ -33,11 +33,7 @@ namespace Baloons.Common.Engine
 
             if (commandWords.Length == 1)
             {
-                if (commandWords[0] == "init")
-                {
-                    this.HandleInitCommand();
-                }
-                else if (commandWords[0] == "restart")
+                if (commandWords[0] == "restart")
                 {
                     this.HandleRestartCommand();
                 }
@@ -55,7 +51,7 @@ namespace Baloons.Common.Engine
             {
                 if (IsValidPopCommand(commandWords))
                 {
-                    HandlePopCommand(commandWords);
+                    this.HandlePopCommand(commandWords);
                 }
                 else
                 {
@@ -68,8 +64,33 @@ namespace Baloons.Common.Engine
                 renderer.RenderText("Invalid input !", "*Press any key to continue*");
                 Console.ReadKey();
             }
+
+            this.CheckForWin();
             
             renderer.RenderText("Command: ");
+        }
+
+        private void InitField()
+        {
+            this.container = new BaloonsContainer();
+            this.popper = new BaloonPopper(container);
+            containerMatrixCopy = new int[container.InnerMatrix.GetLength(0), container.InnerMatrix.GetLength(1)];
+            Array.Copy(container.InnerMatrix, containerMatrixCopy, container.InnerMatrix.Length);
+            renderer.RenderField(container);
+        }
+
+        private void HandleRestartCommand()
+        {
+            Array.Copy(containerMatrixCopy, container.InnerMatrix, containerMatrixCopy.Length);
+            this.popper = new BaloonPopper(container);
+            renderer.RenderContainer(container);
+        }
+
+        private void HandleExitCommand()
+        {
+            renderer.RenderText("Thank you for playing !", "*Press any key to exit*");
+            Console.ReadKey();
+            Environment.Exit(0);
         }
 
         private bool IsValidPopCommand(string[] words)
@@ -91,7 +112,6 @@ namespace Baloons.Common.Engine
                         {
                             return true;
                         }
-
                     }
                 }
             }
@@ -100,40 +120,20 @@ namespace Baloons.Common.Engine
 
         private void HandlePopCommand(string[] commandWords)
         {
-            
             int rowCoords = Convert.ToInt32(commandWords[1]);
             int colCoords = Convert.ToInt32(commandWords[2]);
             container.InnerMatrix = popper.Pop(rowCoords, colCoords);
             renderer.RenderContainer(container);
         }
 
-        private void HandleInitCommand()
+        private void CheckForWin()
         {
-            InitField();
-            renderer.RenderContainer(container);
-        }
-
-        private void HandleRestartCommand()
-        {
-            Array.Copy(containerMatrixCopy, container.InnerMatrix, containerMatrixCopy.Length);
-            this.popper = new BaloonPopper(container);
-            renderer.RenderContainer(container);
-        }
-
-        private void HandleExitCommand()
-        {
-            renderer.RenderText("Thank you for playing !", "*Press any key to exit*");
-            Console.ReadKey();
-            Environment.Exit(0);
-        }
-
-        private void InitField()
-        {
-            this.container = new BaloonsContainer();
-            this.popper = new BaloonPopper(container);
-            containerMatrixCopy = new int[container.InnerMatrix.GetLength(0), container.InnerMatrix.GetLength(1)];
-            Array.Copy(container.InnerMatrix, containerMatrixCopy, container.InnerMatrix.Length);
-            renderer.RenderContainer(container);
+            if (this.popper.AllPopped)
+            {
+                renderer.RenderText("You win !", "You finished in " + popper.Moves + "moves", "*Press any key to exit*");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
         }
     }
 }
