@@ -3,3 +3,5 @@ C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons
 C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Test\obj\Debug\Baloons.Test.csprojResolveAssemblyReference.cache
 C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Test\obj\Debug\Baloons.Test.dll
 C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Test\obj\Debug\Baloons.Test.pdb
+C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Test\bin\Debug\Baloons.Common.exe
+C:\Users\Martin\Documents\Visual Studio 2013\Projects\GitHub\Baloons-Pop\Baloons.Test\bin\Debug\Baloons.Common.pdb

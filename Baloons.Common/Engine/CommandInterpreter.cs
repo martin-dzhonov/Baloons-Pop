@@ -9,7 +9,7 @@ namespace Baloons.Common.Engine
     using Baloons.Common.Enum;
     using Baloons.Common.Field;
 
-    internal class CommandInterpreter
+    public class CommandInterpreter
     {
         private BaloonsContainer container;   
         private ConsoleRenderer renderer;       

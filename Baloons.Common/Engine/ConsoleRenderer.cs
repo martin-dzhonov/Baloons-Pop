@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Baloons.Common.Engine
 {
-    internal class ConsoleRenderer
+    public class ConsoleRenderer
     {
         private readonly int fieldRows;
         private readonly int fieldCols;

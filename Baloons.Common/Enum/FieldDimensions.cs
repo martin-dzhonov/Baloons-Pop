@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Baloons.Common.Enum
 {
-    enum FieldDimensions
+   public enum FieldDimensions
     {
         Width = 25, Height = 8
     }

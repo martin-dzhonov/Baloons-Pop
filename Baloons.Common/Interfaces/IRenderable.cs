@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Baloons.Common.Interfaces
 {
-    interface IRenderable
+   public interface IRenderable
     {
         char[,] GetImage();
     }
