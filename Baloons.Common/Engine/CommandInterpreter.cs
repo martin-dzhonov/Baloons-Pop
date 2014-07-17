@@ -24,50 +24,63 @@ namespace Baloons.Common.Engine
             Console.BufferHeight = 25;
             
             this.renderer = new ConsoleRenderer();
-            InitField();
+            this.InitField();
         }
 
         public void ValidateAndDispatch(string command)
         {
             var commandWords = command.ToLower().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            bool isComandValid = false;
 
             if (commandWords.Length == 1)
             {
-                if (commandWords[0] == "restart")
+                if (commandWords[0] == "restart" || commandWords[0] == "exit" || commandWords[0] == "init")
                 {
-                    this.HandleRestartCommand();
-                }
-                else if (commandWords[0] == "exit")
-                {
-                    this.HandleExitCommand();
-                }
-                else
-                {
-                    renderer.RenderText("Invalid input !", "*Press any key to continue*");
-                    Console.ReadKey();
+                    isComandValid = true;
                 }
             }
-            else if (commandWords.Length == 3)
+
+            if (commandWords.Length == 3)
             {
                 if (IsValidPopCommand(commandWords))
                 {
-                    this.HandlePopCommand(commandWords);
-                }
-                else
-                {
-                    renderer.RenderText("Invalid input !", "*Press any key to continue*");
-                    Console.ReadKey();
+                    isComandValid = true;
                 }
             }
+
+            if (isComandValid)
+            {
+                DispatchCommand(commandWords);
+            }
+
             else if (commandWords.Length != 0)
             {
                 renderer.RenderText("Invalid input !", "*Press any key to continue*");
                 Console.ReadKey();
             }
-
+            
             this.CheckForWin();
             
             renderer.RenderText("Command: ");
+        }
+
+        private void DispatchCommand(string[] commandWords)
+        {
+            switch (commandWords[0])
+            {
+                case "init":
+                    this.InitField();
+                    break;
+                case "restart":
+                    this.HandleRestartCommand();
+                    break;
+                case "exit":
+                    this.HandleExitCommand();
+                    break;
+                case "pop":
+                    this.HandlePopCommand(commandWords);
+                    break;
+            }
         }
 
         private void InitField()
@@ -95,22 +108,25 @@ namespace Baloons.Common.Engine
 
         private bool IsValidPopCommand(string[] words)
         {
-            if (words[0] == "pop")
+            if (words.Length == 3)
             {
-                int num = 0;
-                bool firstCoordValid = Int32.TryParse(words[1], out num);
-                bool secondCoordValid = Int32.TryParse(words[2], out num);
-                if (firstCoordValid && secondCoordValid)
+                if (words[0] == "pop")
                 {
-                    int rowCoords = Int32.Parse(words[1]);
-                    int colCoords = Int32.Parse(words[2]);
-                    if ((rowCoords >= 0 && colCoords >= 0) &&
-                        (rowCoords < (int)MatrixDimensions.Height &&
-                         colCoords < (int)MatrixDimensions.Width))
+                    int num = 0;
+                    bool firstCoordValid = Int32.TryParse(words[1], out num);
+                    bool secondCoordValid = Int32.TryParse(words[2], out num);
+                    if (firstCoordValid && secondCoordValid)
                     {
-                        if (container.InnerMatrix[rowCoords, colCoords] != 0)
+                        int rowCoords = Int32.Parse(words[1]);
+                        int colCoords = Int32.Parse(words[2]);
+                        if ((rowCoords >= 0 && colCoords >= 0) &&
+                            (rowCoords < (int)MatrixDimensions.Height &&
+                             colCoords < (int)MatrixDimensions.Width))
                         {
-                            return true;
+                            if (container.InnerMatrix[rowCoords, colCoords] != 0)
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -130,7 +146,7 @@ namespace Baloons.Common.Engine
         {
             if (this.popper.AllPopped)
             {
-                renderer.RenderText("You win !", "You finished in " + popper.Moves + "moves", "*Press any key to exit*");
+                renderer.RenderText("You win !", "You finished in " + popper.PopsMade + "moves", "*Press any key to exit*");
                 Console.ReadKey();
                 Environment.Exit(0);
             }

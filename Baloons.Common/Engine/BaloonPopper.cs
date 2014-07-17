@@ -29,7 +29,7 @@ namespace Baloons.Common.Engine
             }
         }
 
-        public int Moves
+        public int PopsMade
         {
             get
             {
