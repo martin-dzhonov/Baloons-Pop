@@ -62,6 +62,9 @@ namespace Baloons.Common.Engine
             this.CheckForWin();
             
             renderer.RenderText("Command: ");
+
+
+
         }
 
         private void DispatchCommand(string[] commandWords)
