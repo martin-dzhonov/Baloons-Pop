@@ -1,23 +1,19 @@
-﻿using Baloons.Common.Enum;
-using Baloons.Common.Field;
+﻿using Baloons.Common.Field;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Baloons.Common.Engine
 {
     public class BaloonPopper
     {
         private int baloonsRemaining;
-        private int[,] ballonsMatrixCopy;
-        private int moves;
+        private int[,] containerMatrixCopy;
+        private int popsMade;
         
         public BaloonPopper(BaloonsContainer container)
         {
-            this.ballonsMatrixCopy = new int[container.InnerMatrix.GetLength(0), container.InnerMatrix.GetLength(1)];
-            Array.Copy(container.InnerMatrix, ballonsMatrixCopy, container.InnerMatrix.Length);
+            this.containerMatrixCopy = new int[container.InnerMatrix.GetLength(0), container.InnerMatrix.GetLength(1)];
+            Array.Copy(container.InnerMatrix, containerMatrixCopy, container.InnerMatrix.Length);
             baloonsRemaining = container.InnerMatrix.GetLength(0) * container.InnerMatrix.GetLength(1);
         }
 
@@ -33,23 +29,23 @@ namespace Baloons.Common.Engine
         {
             get
             {
-                return this.moves;
+                return this.popsMade;
             }
         }
 
         public int[,] Pop(int row, int col)
         {
-            this.moves++;
+            this.popsMade++;
             FindAndPop(row, col);
             FallDown();
-            return this.ballonsMatrixCopy;
+            return this.containerMatrixCopy;
         }
 
         private void FindAndPop(int rowAtm, int columnAtm)
         {
-            int searchedValue = ballonsMatrixCopy[rowAtm, columnAtm];
+            int searchedValue = containerMatrixCopy[rowAtm, columnAtm];
             baloonsRemaining--;
-            ballonsMatrixCopy[rowAtm, columnAtm] = 0;
+            containerMatrixCopy[rowAtm, columnAtm] = 0;
             GoLeft(rowAtm, columnAtm, searchedValue);
             GoRight(rowAtm, columnAtm, searchedValue);
             GoDown(rowAtm, columnAtm, searchedValue);
@@ -59,19 +55,19 @@ namespace Baloons.Common.Engine
         private void FallDown()
         {
             int currRow = 0;
-            for (int col = 0; col < ballonsMatrixCopy.GetLength(1); col++)
+            for (int col = 0; col < containerMatrixCopy.GetLength(1); col++)
             {
-                for (int row = ballonsMatrixCopy.GetLength(0) - 1; row > 0; row--)
+                for (int row = containerMatrixCopy.GetLength(0) - 1; row > 0; row--)
                 {
-                    if (ballonsMatrixCopy[row, col] == 0)
+                    if (containerMatrixCopy[row, col] == 0)
                     {
                         currRow = row - 1;
                         while (currRow >= 0)
                         {
-                            if (ballonsMatrixCopy[currRow, col] != 0)
+                            if (containerMatrixCopy[currRow, col] != 0)
                             {
-                                ballonsMatrixCopy[row, col] = ballonsMatrixCopy[currRow, col];
-                                ballonsMatrixCopy[currRow, col] = 0;
+                                containerMatrixCopy[row, col] = containerMatrixCopy[currRow, col];
+                                containerMatrixCopy[currRow, col] = 0;
                                 break;
                             }
                             else
@@ -90,9 +86,9 @@ namespace Baloons.Common.Engine
             int newColumn = column - 1;
             try
             {
-                if (ballonsMatrixCopy[newRow, newColumn] == searchedItem)
+                if (containerMatrixCopy[newRow, newColumn] == searchedItem)
                 {
-                    ballonsMatrixCopy[newRow, newColumn] = 0;
+                    containerMatrixCopy[newRow, newColumn] = 0;
                     baloonsRemaining--;
                     GoLeft(newRow, newColumn, searchedItem);
                 }
@@ -113,9 +109,9 @@ namespace Baloons.Common.Engine
             int newColumn = column + 1;
             try
             {
-                if (ballonsMatrixCopy[newRow, newColumn] == searchedItem)
+                if (containerMatrixCopy[newRow, newColumn] == searchedItem)
                 {
-                    ballonsMatrixCopy[newRow, newColumn] = 0;
+                    containerMatrixCopy[newRow, newColumn] = 0;
                     baloonsRemaining--;
                     GoRight(newRow, newColumn, searchedItem);
                 }
@@ -136,9 +132,9 @@ namespace Baloons.Common.Engine
             int newColumn = column;
             try
             {
-                if (ballonsMatrixCopy[newRow, newColumn] == searchedItem)
+                if (containerMatrixCopy[newRow, newColumn] == searchedItem)
                 {
-                    ballonsMatrixCopy[newRow, newColumn] = 0;
+                    containerMatrixCopy[newRow, newColumn] = 0;
                     baloonsRemaining--;
                     GoDown(newRow, newColumn, searchedItem);
                 }
@@ -159,9 +155,9 @@ namespace Baloons.Common.Engine
             int newColumn = column;
             try
             {
-                if (ballonsMatrixCopy[newRow, newColumn] == searchedItem)
+                if (containerMatrixCopy[newRow, newColumn] == searchedItem)
                 {
-                    ballonsMatrixCopy[newRow, newColumn] = 0;
+                    containerMatrixCopy[newRow, newColumn] = 0;
                     baloonsRemaining--;
                     GoUp(newRow, newColumn, searchedItem);
                 }

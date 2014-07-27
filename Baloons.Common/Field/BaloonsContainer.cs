@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Baloons.Common.Field
 {
-   public class BaloonsContainer : IRenderable
+    public class BaloonsContainer : IRenderable
     {
         private int[,] innerMatrix;
         private char[,] image;

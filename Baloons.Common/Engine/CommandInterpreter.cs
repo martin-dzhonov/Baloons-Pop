@@ -52,7 +52,6 @@ namespace Baloons.Common.Engine
             {
                 DispatchCommand(commandWords);
             }
-
             else if (commandWords.Length != 0)
             {
                 renderer.RenderText("Invalid input !", "*Press any key to continue*");
@@ -62,9 +61,6 @@ namespace Baloons.Common.Engine
             this.CheckForWin();
             
             renderer.RenderText("Command: ");
-
-
-
         }
 
         private void DispatchCommand(string[] commandWords)

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Baloons.Common.Engine
 {
@@ -10,6 +7,7 @@ namespace Baloons.Common.Engine
     {
         private readonly CommandInterpreter interpreter;
         private static Engine instance = null;
+
         private Engine()
         {
             this.interpreter = new CommandInterpreter();
@@ -32,7 +30,7 @@ namespace Baloons.Common.Engine
             string command = string.Empty;
 
             while (true)
-            {          
+            { 
                 interpreter.ValidateAndDispatch(command);
                 command = Console.ReadLine();      
             }

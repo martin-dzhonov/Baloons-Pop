@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Baloons.Common.Engine;
 using Baloons.Common.Field;
 
 namespace Baloons.Test.EngineTests
@@ -27,9 +26,6 @@ namespace Baloons.Test.EngineTests
             BaloonsContainer container = new BaloonsContainer();
             int[,] innerMatrix = container.InnerMatrix;
             char[,] image = container.GetImage();
-
-            Assert.AreEqual(image.GetLength(0), innerMatrix.GetLength(0));
-            Assert.AreEqual(image.GetLength(1), innerMatrix.GetLength(1));
 
             for (int i = 0; i < container.InnerMatrix.GetLength(0); i++)
             {
